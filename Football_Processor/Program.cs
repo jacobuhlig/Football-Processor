@@ -7,19 +7,23 @@ class Program
     {
         Console.WriteLine("Hello, World");
 
-        var teamsHandler = new FileHandler("02._csv\\01._setup.csv");
-        teamsHandler.StartReading();
-        List<Team> teams1 = teamsHandler.teams;
-        teamsHandler.teams.Clear();
+        var leaguesHandler = new FileHandler("02._csv\\01._setup.csv");
+        leaguesHandler.StartReading();
+        List<League> leagues1 = leaguesHandler.leagues;
+        /* leaguesHandler.leagues.Clear(); */
 
         Console.WriteLine("After first init");
 
-        var leaguesHandler = new FileHandler("02._csv\\02._teams.csv");
-        leaguesHandler.StartReading();
-        List<League> leagues1 = leaguesHandler.leagues;
-        teamsHandler.teams.Clear();
+        var teamsHandler = new FileHandler("02._csv\\02._teams.csv");
+        teamsHandler.StartReading();
+        List<Team> teams1 = teamsHandler.teams;
+        /* teamsHandler.teams.Clear(); */
 
         Console.WriteLine("After second init");
+
+        leaguesHandler.WriteFile(new Round("home", "away", "0-0"));
+
+        Console.WriteLine("After first write");
 
         Console.WriteLine(teams1.ElementAt(0).abbreviation);
         foreach (var team in teams1)

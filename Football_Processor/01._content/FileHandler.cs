@@ -9,6 +9,7 @@ namespace Football_Processor
     {
         private readonly FileInfo _file;
         private StreamReader? _reader;
+        private StreamWriter? _writer;
         private string _splitVar = ",";
         public List<Team> teams { get; set; }
         public List<League> leagues { get; set; }
@@ -16,8 +17,8 @@ namespace Football_Processor
         public FileHandler(string filePath)
         {
             _file = new FileInfo(filePath);
-            teams = new List<Team>(); // Initialize the teams list
             leagues = new List<League>(); // Initialize the leagues list
+            teams = new List<Team>(); // Initialize the teams list
 
             try
             {
@@ -122,6 +123,28 @@ namespace Football_Processor
             {
                 Console.WriteLine(e.Message);
                 return null;
+            }
+        }
+
+        public void WriteFile(Round round)
+        {
+            try
+            {
+                string[] files = Directory.GetFiles("02._csv\\rounds");
+                int numberOfFiles = files.Length + 1;
+
+                Console.WriteLine(numberOfFiles);
+                _writer = new StreamWriter($"02._csv\\rounds\\rounds-{numberOfFiles}.csv");
+
+                _writer.WriteLine($"{round.homeTeam},{round.awayTeam},{round.score}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                _writer.Close();
             }
         }
     }
