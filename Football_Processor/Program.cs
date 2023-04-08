@@ -21,24 +21,11 @@ class Program
 
         Console.WriteLine("After second init");
 
+        var roundsManager = new RoundManager();
+        roundsManager.InitRounds(1);
+
         leaguesHandler.WriteFile(new Round("home", "away", "0-0"));
 
         Console.WriteLine("After first write");
-
-        Console.WriteLine(teams1.ElementAt(0).abbreviation);
-        foreach (var team in teams1)
-        {
-            Console.WriteLine("Got to the forEach");
-            Console.WriteLine(team.abbreviation);
-        }
-
-        Console.WriteLine("After first writeout");
-
-        foreach (var league in leagues1)
-        {
-            Console.WriteLine(league.leagueName);
-        }
-
-        Console.WriteLine("After second writeout");
     }
 }
