@@ -1,6 +1,6 @@
 namespace Football_Processor
 {
-    enum LeagueType
+    public enum League
     {
         SUPER,
         NORDICBET
