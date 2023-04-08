@@ -21,8 +21,10 @@ class Program
 
         Console.WriteLine("After second init");
 
+        Console.WriteLine(teams1.ElementAt(0).abbreviation);
         foreach (var team in teams1)
         {
+            Console.WriteLine("Got to the forEach");
             Console.WriteLine(team.abbreviation);
         }
 
