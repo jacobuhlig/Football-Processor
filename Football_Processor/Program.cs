@@ -22,7 +22,7 @@ class Program
         Console.WriteLine("After second init");
 
         var roundsManager = new RoundManager();
-        roundsManager.InitRounds(1);
+        //roundsManager.InitRounds(1);
 
         leaguesHandler.WriteFile(new Round("home", "away", "0-0"));
 

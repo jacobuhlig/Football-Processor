@@ -14,6 +14,10 @@ namespace Football_Processor
         public List<Team> teams { get; set; }
         public List<League> leagues { get; set; }
 
+        public FileHandler()
+        {
+        }
+
         public FileHandler(string filePath)
         {
             _file = new FileInfo(filePath);
@@ -126,6 +130,30 @@ namespace Football_Processor
             }
         }
 
+        public List<string> getTeamAbbreviations()
+        {
+            List<string> foundAbb = new List<string>();
+
+            try
+            {
+
+                using (StreamReader _SR = new StreamReader("02._csv\\02._teams.csv"))
+                    while (!_SR.EndOfStream)
+                    {
+                        var lines = _SR.ReadLine().Split(',');
+                        foundAbb.Add(lines.First());
+                    }
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
+            return foundAbb;
+        }
+
         public void WriteFile(Round round)
         {
             try
@@ -136,7 +164,10 @@ namespace Football_Processor
                 Console.WriteLine(numberOfFiles);
                 _writer = new StreamWriter($"02._csv\\rounds\\rounds-{numberOfFiles}.csv");
 
+
                 _writer.WriteLine($"{round.homeTeam},{round.awayTeam},{round.score}");
+
+
             }
             catch (Exception e)
             {
@@ -149,3 +180,4 @@ namespace Football_Processor
         }
     }
 }
+
