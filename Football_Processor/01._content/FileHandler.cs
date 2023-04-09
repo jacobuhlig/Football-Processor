@@ -136,6 +136,28 @@ namespace Football_Processor
             }
         }
 
+        public void PrintSimpleStandings(int position)
+        {
+            try
+            {
+                Team team = teams[position - 1];
+
+                /* Position in the table, Special marking in parentheses, Full club name */
+                Console.WriteLine($"Position in the table           : {position}");
+                Console.WriteLine($"Special marking in parentheses  : {team.abbreviation}");
+                Console.WriteLine($"Full club name                  : {team.clubname}");
+                Console.ReadLine();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                _reader.Close();
+            }
+        }
+
         public void WriteFile(Round round)
         {
             try

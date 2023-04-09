@@ -9,6 +9,9 @@ namespace Football_Processor
         public FileHandler leaguesHandler;
         public FileHandler teamsHandler;
         public FileHandler resultsHandler;
+        public bool readIntro;
+        public bool introduced;
+        public bool isRunning;
 
         public UI()
         {
@@ -28,33 +31,167 @@ namespace Football_Processor
 
         public void Start()
         {
-            bool isRunning = true;
+            isRunning = true;
+            readIntro = true;
+            introduced = false;
 
             while (isRunning)
             {
-                int input = PromptUser("Football Processor", 1);
+                int? parsedInput = GetValidIntInput(() =>
+                {
+                    PrintMessage(0);
+                    PrintMessage(6);
+                    PrintMessage(7);
+                });
 
-                ChooseMain(input);
+                if (!isRunning)
+                {
+                    break;
+                }
+
+                Console.Clear();
+
+                if (parsedInput != null)
+                {
+                    ChooseMain(parsedInput.Value);
+                }
+
+                Console.Clear();
             }
         }
 
-        public void ChooseMain(int input)
+        public int? GetValidIntInput(Action printMessages)
+        {
+            int parsedInput;
+            bool validInput;
+            string input;
+
+            do
+            {
+                Console.Clear();
+                PrintMessage(1);
+
+                if (readIntro)
+                {
+                    if (!introduced)
+                    {
+                        Console.WriteLine();
+                        PrintMessage(5);
+                        introduced = true;
+                        readIntro = false;
+                    }
+                }
+
+                printMessages();
+
+                input = Console.ReadLine()?.Trim();
+
+                if (input == "q")
+                {
+                    isRunning = false;
+                    return null;
+                }
+
+                validInput = int.TryParse(input, out parsedInput);
+            } while (!validInput);
+
+            return parsedInput;
+        }
+
+        public void ChooseMain(int choice)
+        {
+            switch (choice)
+            {
+                case 1:
+                    PrintMessage(1);
+                    PrintMessage(2);
+                    PrintMessage(8);
+                    resultsHandler.PrintList();
+                    break;
+                case 2:
+                    PrintMessage(1);
+                    PrintMessage(3);
+                    PrintListOfTeams();
+                    Console.ReadLine();
+                    break;
+                case 3:
+                    int? parsedInput = GetValidIntInput(() =>
+                    {
+                        PrintMessage(4);
+                        PrintMessage(0);
+                        PrintMessage(6);
+                        PrintListOfTeams();
+                    });
+                    if (parsedInput != null)
+                    {
+                        bool validInput = false;
+
+                        while (!validInput)
+                            if (parsedInput >= 1 && parsedInput <= 12)
+                            {
+                                ChooseTeam(parsedInput.Value);
+                                validInput = true;
+                            }
+                            else
+                            {
+                                PrintMessage(9);
+                                Console.ReadLine();
+                            }
+                    }
+                    break;
+                default:
+                    PrintMessage(9);
+                    Console.ReadLine();
+                    break;
+            }
+        }
+
+        public void PrintMessage(int input)
         {
             switch (input)
             {
+                case 0:
+                    Console.WriteLine();
+                    break;
                 case 1:
-                    int choice = PromptUser("Choose Team", 2);
-                    ChooseTeam(choice);
-                    Console.Clear();
+                    elm.GetDivider(TextDividerType.Thick, "Football Processor");
                     break;
                 case 2:
-                    PrintMessage(3);
-                    resultsHandler.PrintList();
-                    Console.Clear();
+                    elm.GetDivider(TextDividerType.Double, " Current Standings");
+                    Console.WriteLine();
+                    break;
+                case 11:
+                    elm.GetDivider(TextDividerType.Double, " Simple Standings ");
+                    Console.WriteLine();
                     break;
                 case 3:
-                    PromptUser("Choose Team", 4);
-                    Console.Clear();
+                    elm.GetDivider(TextDividerType.Double, "     All Teams    ");
+                    Console.WriteLine();
+                    break;
+                case 4:
+                    elm.GetDivider(TextDividerType.Double, "    Select Team   ");
+                    break;
+                case 5:
+                    Console.WriteLine("Welcome to the Football Processor");
+                    break;
+                case 6:
+                    Console.WriteLine("Please select an option:");
+                    break;
+                case 7:
+                    Console.WriteLine("1. Current standings");
+                    Console.WriteLine("2. Show all teams");
+                    Console.WriteLine("3. Select a team");
+                    break;
+                case 10:
+                    Console.WriteLine("1. Register round");
+                    Console.WriteLine("2. Show simple standings");
+                    Console.WriteLine("3. Show expanded standings");
+                    break;
+                case 8:
+                    Console.WriteLine("Pos  Team          M W D L GF GA GD P Streak");
+                    break;
+                case 9:
+                    Console.WriteLine("Not an available option. Please try again.");
                     break;
                 default:
                     throw new ArgumentException("Invalid input", nameof(input));
@@ -63,75 +200,65 @@ namespace Football_Processor
 
         public void ChooseTeam(int input)
         {
-            if (input >= 1 && input <= 12)
+            while (isRunning)
             {
-                Console.WriteLine("Should there be a purpose to selecting a team?");
-                Console.WriteLine($"In this case team {input} was selected.");
-                Console.WriteLine("Insert code here.");
-                Console.ReadLine();
+                int? parsedInput = GetValidIntInput(() =>
+                {
+                    PrintMessage(4);
+                    PrintMessage(0);
+                    PrintMessage(6);
+                    PrintMessage(10);
+                });
+
+                if (!isRunning)
+                {
+                    break;
+                }
+
+                Console.Clear();
+
+                if (parsedInput != null)
+                {
+                    TeamOptions(input, parsedInput.Value);
+                }
+
+                Console.Clear();
             }
-            else
-            {
-                throw new ArgumentException("Invalid input", nameof(input));
-            }
+            /* teamsHandler */
+            /* Console.WriteLine("Should there be a purpose to selecting a team?");
+            Console.WriteLine($"In this case team {input} was selected.");
+            Console.WriteLine("Insert code here.");
+            Console.ReadLine(); */
         }
 
-        public int PromptUser(string header, int message)
-        {
-            elm.GetDivider(TextDividerType.Basic, header);
-            PrintMessage(message);
-
-            return GetInput<int>();
-        }
-
-        public T GetInput<T>()
-        {
-            var input = Console.ReadLine();
-
-            if (!int.TryParse(input, out int result))
-            {
-                throw new ArgumentException("Input is not a number.");
-            }
-
-            Console.Clear();
-
-            return (T)Convert.ChangeType(result, typeof(T));
-        }
-
-        public void PrintMessage(int input)
+        public void TeamOptions(int id, int input)
         {
             switch (input)
             {
                 case 1:
-                    Console.WriteLine("Welcome to the Football Processor");
-                    Console.WriteLine("Please select an option:");
-                    Console.WriteLine("1. Show/Select a team");
-                    Console.WriteLine("2. Current standings");
-                    Console.WriteLine("3. Show teams");
+                    Console.WriteLine("Register round");
                     break;
                 case 2:
-                    Console.WriteLine("Please select an option:");
-                    Console.WriteLine(GenerateListOfTeams());
+                    PrintMessage(1);
+                    PrintMessage(11);
+                    teamsHandler.PrintSimpleStandings(id);
                     break;
                 case 3:
-                    Console.WriteLine("Pos  Team          M W D L GF GA GD P Streak");
-                    break;
-                case 4:
-                    Console.WriteLine(GenerateListOfTeams());
+                    Console.WriteLine("Expanded standings");
                     break;
                 default:
                     throw new ArgumentException("Invalid input", nameof(input));
             }
         }
 
-        private string GenerateListOfTeams()
+        private void PrintListOfTeams()
         {
             StringBuilder teamList = new StringBuilder();
             for (int i = 0; i < teamsHandler.teams.Count; i++)
             {
                 teamList.AppendLine($"{i + 1}. {teamsHandler.teams[i].clubname}");
             }
-            return teamList.ToString();
+            Console.WriteLine(teamList.ToString());
         }
     }
 }
