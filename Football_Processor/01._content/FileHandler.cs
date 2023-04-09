@@ -26,10 +26,6 @@ namespace Football_Processor
 
             try
             {
-                Console.WriteLine("Got to try");
-                Console.WriteLine(filePath);
-                Console.WriteLine(_file.FullName);
-
                 _reader = new StreamReader(_file.FullName);
             }
             catch (FileNotFoundException e)
@@ -40,24 +36,18 @@ namespace Football_Processor
 
         public void StartReading()
         {
-            List<string> lineOfFile = ReadFile();
-            Console.WriteLine(
-                "Start() - lineOfFile.Count: "
-                    + lineOfFile.Count
-                    + " - lineOfFile[0]: "
-                    + lineOfFile[0]
-            );
-            int length = lineOfFile.Count;
+            List<string> linesOfFile = ReadFile();
+
+            int length = linesOfFile.Count;
 
             for (int i = 0; i < length; i++)
             {
-                List<string> splitLine = ReadFile2(lineOfFile[i]);
+                List<string> splitLine = ReadFile2(linesOfFile[i]);
 
                 if (splitLine.Count < 4)
                 {
                     Team team = new Team(splitLine[0], splitLine[1], splitLine[2]);
 
-                    Console.WriteLine(team.abbreviation + " " + team.clubname + " " + team.ranking);
                     try
                     {
                         teams.Add(team);
@@ -78,7 +68,6 @@ namespace Football_Processor
                         splitLine[5]
                     );
 
-                    Console.WriteLine(league.leagueName + " " + league.nopChampions);
                     try
                     {
                         leagues.Add(league);
@@ -130,6 +119,27 @@ namespace Football_Processor
             }
         }
 
+        public void PrintList()
+        {
+            try
+            {
+                List<string> stringList = ReadFile();
+                foreach (string item in stringList)
+                {
+                    Console.WriteLine(item);
+                }
+                Console.ReadLine();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                _reader.Close();
+            }
+        }
+
         public List<string> getTeamAbbreviations()
         {
             List<string> foundAbb = new List<string>();
@@ -178,6 +188,28 @@ namespace Football_Processor
                 _writer.Close();
             }
         }
+
+        /* public void WriteResults()
+        {
+            try
+            {
+                string[] files = Directory.GetFiles("02._csv\\rounds");
+                int numberOfFiles = files.Length + 1;
+
+                Console.WriteLine(numberOfFiles);
+                _writer = new StreamWriter($"02._csv\\03._results.txt");
+
+                _writer.WriteLine($"{round.homeTeam},{round.awayTeam},{round.score}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                _writer.Close();
+            }
+        } */
     }
 }
 

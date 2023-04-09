@@ -3,29 +3,23 @@ using Football_Processor;
 
 class Program
 {
+    static UI _ui;
+
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World");
+        Run();
+    }
 
-        var leaguesHandler = new FileHandler("02._csv\\01._setup.csv");
-        leaguesHandler.StartReading();
-        List<League> leagues1 = leaguesHandler.leagues;
-        /* leaguesHandler.leagues.Clear(); */
+    static void Run()
+    {
+        Console.Clear();
+        Init();
+        _ui.Start();
+    }
 
-        Console.WriteLine("After first init");
-
-        var teamsHandler = new FileHandler("02._csv\\02._teams.csv");
-        teamsHandler.StartReading();
-        List<Team> teams1 = teamsHandler.teams;
-        /* teamsHandler.teams.Clear(); */
-
-        Console.WriteLine("After second init");
-
-        var roundsManager = new RoundManager();
-        //roundsManager.InitRounds(1);
-
-        leaguesHandler.WriteFile(new Round("home", "away", "0-0"));
-
-        Console.WriteLine("After first write");
+    static void Init()
+    {
+        // Init of UI
+        _ui = new UI();
     }
 }
