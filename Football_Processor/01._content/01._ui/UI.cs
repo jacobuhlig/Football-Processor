@@ -2,6 +2,7 @@ namespace Football_Processor
 {
     using System;
     using System.Text;
+    using System.Collections.Generic;
 
     public class UI
     {
@@ -9,6 +10,7 @@ namespace Football_Processor
         public FileHandler leaguesHandler;
         public FileHandler teamsHandler;
         public FileHandler resultsHandler;
+        public RoundManager roundManager;
         public bool readIntro;
         public bool introduced;
         public bool isRunning;
@@ -17,6 +19,7 @@ namespace Football_Processor
         {
             elm = new UI_Elements();
 
+            roundManager = new RoundManager();
             // Init of leagues
             leaguesHandler = new FileHandler("02._csv\\01._setup.csv");
             leaguesHandler.StartReading();
@@ -34,6 +37,8 @@ namespace Football_Processor
             isRunning = true;
             readIntro = true;
             introduced = false;
+
+            roundManager.InitRounds();
 
             while (isRunning)
             {

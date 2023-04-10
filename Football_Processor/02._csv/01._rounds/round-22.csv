@@ -1,7 +1,7 @@
 home,away,homeGoals,awayGoals
-VBK,FCM,5,1
-ACH,LBK,5,5
-AGF,BIF,3,1
-SIF,FA,4,1
-AAB,FCK,2,2
-NFC,FCN,4,2
+ACH,VBK,1,2
+FCM,AGF,1,2
+LBK,SIF,5,3
+BIF,AAB,0,5
+FA,NFC,4,5
+FCK,FCN,3,5

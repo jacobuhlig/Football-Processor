@@ -20,8 +20,6 @@ class Program
     static void Init()
     {
         // Init of UI
-        RoundManager rnd = new RoundManager();
-        rnd.InitRounds();
         _ui = new UI();
     }
 }
