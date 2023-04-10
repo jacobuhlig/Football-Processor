@@ -144,13 +144,7 @@ namespace Football_Processor
 
             try
             {
-                StreamReader _SR = new StreamReader("02._csv\\02._teams.csv");
-                string first = _SR.ReadLine();
-                while (!_SR.EndOfStream)
-                {
-                    var lines = _SR.ReadLine().Split(',');
-                    foundAbb.Add(lines.First());
-                }
+                teams.ForEach(team => foundAbb.Add(team.abbreviation));
             }
             catch (Exception e)
             {

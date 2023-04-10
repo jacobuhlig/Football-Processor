@@ -38,7 +38,7 @@ namespace Football_Processor
             readIntro = true;
             introduced = false;
 
-            roundManager.InitRounds();
+            roundManager.InitRounds(teamsHandler.getTeamAbbreviations());
 
             while (isRunning)
             {

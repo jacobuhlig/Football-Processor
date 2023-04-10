@@ -30,34 +30,16 @@ namespace Football_Processor
 
         private static Random random = new Random();
 
-        public void InitRounds()
+        public void InitRounds(List<string> abbreviations)
         {
             /*
             This should emulate the rounds that are to take place between the different teams
             The filehandling should also be handled from here as well.
             */
-            FileHandler fh = new FileHandler();
-
-            //List<string> teams = fh.getTeamAbbreviations();
-            List<string> teams = new List<string>
-            {
-                "VBK",
-                "SIF",
-                "AAB",
-                "NFC",
-                "FCN",
-                "FCK",
-                "FA",
-                "BIF",
-                "LBK",
-                "FCM",
-                "ACH",
-                "AGF"
-            };
 
             for (int round = 1; round <= 22; round++)
             {
-                var matches = GenerateRound(teams, round);
+                var matches = GenerateRound(abbreviations, round);
                 SaveMatchesToCSV(matches, $"02._csv\\01._rounds\\round-{round}.csv");
             }
         }
