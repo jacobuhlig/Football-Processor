@@ -175,6 +175,38 @@ namespace Football_Processor
             }
         }
 
+        public void PrintExpandedStandings(int position)
+        {
+            try
+            {
+                Team team = teams[position - 1];
+
+                /* Position in the table, Special marking in parentheses, Full club name */
+                Console.WriteLine($"Position in the table           : {position}");
+                Console.WriteLine($"Special marking in parentheses  : {team.abbreviation}");
+                Console.WriteLine($"Full club name                  : {team.clubname}");
+                Console.WriteLine($"Games played                    : {team.gamesPlayed}");
+                Console.WriteLine($"Number of games won             : {team.nogWon}");
+                Console.WriteLine($"Number of games drawn           : {team.nogDrawn}");
+                Console.WriteLine($"Number of games lost            : {team.nogLost}");
+                Console.WriteLine($"Goals for                       : {team.goalsFor}");
+                Console.WriteLine($"Goals against                   : {team.goalsAgainst}");
+                Console.WriteLine($"Goal Difference                 : {team.goalDifference}");
+                Console.WriteLine($"Points achieved                 : {team.pointsAchieved}");
+                Console.WriteLine($"Current winning streak          : {team.winningStreak}");
+
+                Console.ReadLine();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                _reader.Close();
+            }
+        }
+
         public void WriteFile(Round round)
         {
             try

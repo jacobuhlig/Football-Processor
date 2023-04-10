@@ -14,6 +14,7 @@ namespace Football_Processor
         public bool readIntro;
         public bool introduced;
         public bool isRunning;
+        public bool isRunningLocal;
 
         public UI()
         {
@@ -39,7 +40,7 @@ namespace Football_Processor
             introduced = false;
 
             roundManager.InitRounds(teamsHandler.getTeamAbbreviations());
-            teamsHandler.WriteResults(leaguesHandler.leagues);
+            /* teamsHandler.WriteResults(leaguesHandler.leagues); */
 
             while (isRunning)
             {
@@ -98,6 +99,12 @@ namespace Football_Processor
                     return null;
                 }
 
+                if (input == "")
+                {
+                    isRunningLocal = false;
+                    return null;
+                }
+
                 validInput = int.TryParse(input, out parsedInput);
             } while (!validInput);
 
@@ -116,11 +123,17 @@ namespace Football_Processor
                     break;
                 case 2:
                     PrintMessage(1);
+                    PrintMessage(12);
+                    PrintListOfLeagues();
+                    Console.ReadLine();
+                    break;
+                case 3:
+                    PrintMessage(1);
                     PrintMessage(3);
                     PrintListOfTeams();
                     Console.ReadLine();
                     break;
-                case 3:
+                case 4:
                     int? parsedInput = GetValidIntInput(() =>
                     {
                         PrintMessage(4);
@@ -170,8 +183,16 @@ namespace Football_Processor
                     elm.GetDivider(TextDividerType.Double, " Simple Standings ");
                     Console.WriteLine();
                     break;
+                case 13:
+                    elm.GetDivider(TextDividerType.Double, "Expanded standings");
+                    Console.WriteLine();
+                    break;
                 case 3:
                     elm.GetDivider(TextDividerType.Double, "     All Teams    ");
+                    Console.WriteLine();
+                    break;
+                case 12:
+                    elm.GetDivider(TextDividerType.Double, "    All Leagues   ");
                     Console.WriteLine();
                     break;
                 case 4:
@@ -185,13 +206,13 @@ namespace Football_Processor
                     break;
                 case 7:
                     Console.WriteLine("1. Current standings");
-                    Console.WriteLine("2. Show all teams");
-                    Console.WriteLine("3. Select a team");
+                    Console.WriteLine("2. Show all leagues");
+                    Console.WriteLine("3. Show all teams");
+                    Console.WriteLine("4. Select a team");
                     break;
                 case 10:
-                    Console.WriteLine("1. Register round");
-                    Console.WriteLine("2. Show simple standings");
-                    Console.WriteLine("3. Show expanded standings");
+                    Console.WriteLine("1. Show simple standings");
+                    Console.WriteLine("2. Show expanded standings");
                     break;
                 case 8:
                     Console.WriteLine("Pos  Team          M W D L GF GA GD P Streak");
@@ -206,7 +227,9 @@ namespace Football_Processor
 
         public void ChooseTeam(int input)
         {
-            while (isRunning)
+            isRunningLocal = true;
+
+            while (isRunningLocal)
             {
                 int? parsedInput = GetValidIntInput(() =>
                 {
@@ -216,7 +239,7 @@ namespace Football_Processor
                     PrintMessage(10);
                 });
 
-                if (!isRunning)
+                if (!isRunningLocal)
                 {
                     break;
                 }
@@ -242,16 +265,14 @@ namespace Football_Processor
             switch (input)
             {
                 case 1:
-                    Console.WriteLine("Register round");
-                    break;
-                case 2:
                     PrintMessage(1);
                     PrintMessage(11);
                     teamsHandler.PrintSimpleStandings(id);
-
                     break;
-                case 3:
-                    Console.WriteLine("Expanded standings");
+                case 2:
+                    PrintMessage(1);
+                    PrintMessage(13);
+                    teamsHandler.PrintExpandedStandings(id);
                     break;
                 default:
                     throw new ArgumentException("Invalid input", nameof(input));
@@ -266,6 +287,17 @@ namespace Football_Processor
                 teamList.AppendLine($"{i + 1}. {teamsHandler.teams[i].clubname}");
             }
             Console.WriteLine(teamList.ToString());
+        }
+
+        private void PrintListOfLeagues()
+        {
+            StringBuilder listOfLeagues = new StringBuilder();
+            for (int i = 0; i < leaguesHandler.leagues.Count; i++)
+            {
+                var league = leaguesHandler.leagues[i];
+                listOfLeagues.AppendLine($"{i + 1}. {league.leagueName}");
+            }
+            Console.WriteLine(listOfLeagues.ToString());
         }
     }
 }
