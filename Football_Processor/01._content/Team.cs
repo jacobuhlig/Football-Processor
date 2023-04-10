@@ -58,7 +58,7 @@ namespace Football_Processor
 
         public override string ToString()
         {
-            string formattedString = $"{}";
+            string formattedString = $"{this.clubname} ({this.abbreviation})";
 
 
 
