@@ -39,7 +39,10 @@ namespace Football_Processor
 
         public void SetStreak(string matchResult = "")
         {
-            if (matchResult.Length != 1) { return; }
+            if (matchResult.Length != 1)
+            {
+                return;
+            }
 
             if (this.winningStreak.Length >= 4)
             {
@@ -53,18 +56,16 @@ namespace Football_Processor
             this.winningStreak = winningStreak;
         }
 
-
         // "Pos  Team          M W D L GF GA GD P Streak"
 
         public override string ToString()
         {
-            string formattedString = $"{this.clubname} ({this.abbreviation})";
+            string formattedString =
+                $"{this.clubname} ({this.abbreviation})                   {this.gamesPlayed} "
+                + $"{this.nogWon} {this.nogDrawn} {this.nogLost} {this.goalsFor} {this.goalsAgainst} "
+                + $"{this.goalDifference} {this.pointsAchieved} {this.winningStreak}";
 
-
-
-            return base.ToString();
+            return formattedString.ToString();
         }
-
-
     }
 }
