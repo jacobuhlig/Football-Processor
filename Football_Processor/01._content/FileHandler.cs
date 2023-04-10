@@ -241,35 +241,39 @@ namespace Football_Processor
                 int numberOfFiles = files.Length + 1;
                 int idx = 1;
                 UI_Elements ui = new UI_Elements();
+                string stringToAppend = "";
 
 
                 //Debug.WriteLine(numberOfFiles);
                 //_writer = new StreamWriter($"02._csv\\03._results.txt");
-                //using (StreamWriter writer = new StreamWriter($"02._csv\\03._results.txt"))
-                //{
-                foreach (string file in files)
+                using (StreamWriter writer = new StreamWriter($"02._csv\\03._results.txt"))
                 {
-                    List<Match> resultMatches = FindMatches(idx);
-                    CalcResults(resultMatches);
-                    SortTeams();
-                    //if (idx == 1) { continue; }
-                    //else
-                    //{
-                    if (idx <= 22)
+                    foreach (string file in files)
                     {
-                        Console.WriteLine("\n");
-                        ui.GetDivider(TextDividerType.Wavy, $"Round: {idx}");
-                        foreach (Team team in teams)
+                        List<Match> resultMatches = FindMatches(idx);
+                        CalcResults(resultMatches);
+                        SortTeams();
+                        stringToAppend = "";
+                        //if (idx == 1) { continue; }
+                        //else
+                        //{
+                        if (idx <= 22)
                         {
-                            Console.WriteLine(team);
+                            Console.WriteLine("\n");
+                            ui.GetDivider(TextDividerType.Wavy, $"Round: {idx}");
+                            writer.WriteLine($"~~~~~~ ROUND: {idx} ~~~~~~");
+                            foreach (Team team in teams)
+                            {
+                                Console.WriteLine(team);
+                                writer.WriteLine(team);
+                            }
                         }
+
+
+                        //}
+                        idx++;
                     }
-
-
-                    //}
-                    idx++;
                 }
-                //}
 
 
                 //_writer.WriteLine($"{round.homeTeam},{round.awayTeam},{round.score}");

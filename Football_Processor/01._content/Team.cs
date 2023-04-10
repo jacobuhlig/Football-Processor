@@ -59,6 +59,7 @@ namespace Football_Processor
 
         // "Pos  Team          M W D L GF GA GD P Streak"
 
+
         public override string ToString()
         {
             string clubInfo = $"{this.clubname} ({this.abbreviation})";

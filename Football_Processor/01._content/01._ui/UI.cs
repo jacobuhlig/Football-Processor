@@ -30,7 +30,7 @@ namespace Football_Processor
             teamsHandler.StartReading();
 
             // Init of results
-            resultsHandler = new FileHandler("02._csv\\03._results.txt");
+            //resultsHandler = new FileHandler("02._csv\\03._results.txt");
         }
 
         public void Start()
@@ -120,7 +120,7 @@ namespace Football_Processor
                     PrintMessage(2);
                     PrintMessage(8);
                     teamsHandler.WriteResults();
-                    resultsHandler.PrintList();
+                    //resultsHandler.PrintList();
 
                     break;
                 case 2:

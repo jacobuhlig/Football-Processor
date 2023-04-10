@@ -1,7 +1,15 @@
 home,away,homeGoals,awayGoals
+<<<<<<< HEAD
 VBK,FCK,1,0
 SIF,AAB,2,0
 AGF,FCN,1,4
 FCM,FA,2,1
 BIF,LBK,0,5
+=======
+VBK,FCK,2,2
+SIF,AAB,4,4
+AGF,FCN,2,1
+FCM,FA,5,4
+BIF,LBK,0,0
+>>>>>>> e0d042787189f4e6a1c39e58a61b61a60133ffb6
 NFC,ACH,2,1
