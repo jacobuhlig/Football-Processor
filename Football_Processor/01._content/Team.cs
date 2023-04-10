@@ -61,23 +61,28 @@ namespace Football_Processor
 
         public override string ToString()
         {
+            string clubInfo = $"{this.clubname} ({this.abbreviation})";
+            int desiredLength = 40; // Adjust this value to control the padding
 
-            string unformattedString =
-                $"{this.clubname} ({this.abbreviation}) {this.gamesPlayed} "
-                + $"{this.nogWon} {this.nogDrawn} {this.nogLost} {this.goalsFor} {this.goalsAgainst} "
-                + $"{this.goalDifference} {this.pointsAchieved} {this.winningStreak}";
+            // Pad the clubInfo with spaces to the desired length
+            string paddedClubInfo = clubInfo.PadRight(desiredLength, ' ');
 
-            string toReturn = unformattedString.ToString();
-            int length = toReturn.Length;
-            Console.WriteLine(length);
+            int shortLenght = 3;
+
+            string aa = $"{this.gamesPlayed}".PadRight(shortLenght, ' ');
+            string bb = $"{this.nogWon}".PadRight(shortLenght, ' ');
+            string cc = $"{this.nogDrawn}".PadRight(shortLenght, ' ');
+            string dd = $"{this.nogLost}".PadRight(shortLenght, ' ');
+            string ee = $"{this.goalsFor}".PadRight(shortLenght, ' ');
+            string ff = $"{this.goalsAgainst}".PadRight(shortLenght, ' ');
+            string gg = $"{this.goalDifference}".PadRight(shortLenght, ' ');
+            string hh = $"{this.pointsAchieved}".PadRight(shortLenght, ' ');
+            string ii = $"{this.winningStreak}".PadRight(shortLenght, ' ');
 
             string formattedString =
-                $"{this.clubname} ({this.abbreviation}) {} {this.gamesPlayed} "
-                + $"{this.nogWon} {this.nogDrawn} {this.nogLost} {this.goalsFor} {this.goalsAgainst} "
-                + $"{this.goalDifference} {this.pointsAchieved} {this.winningStreak}";
+                $"{paddedClubInfo} {aa} {bb} {cc} {dd} {ee} {ff} {gg} {hh} {ii}";
 
-
-            return toReturn;
+            return formattedString;
         }
     }
 }
