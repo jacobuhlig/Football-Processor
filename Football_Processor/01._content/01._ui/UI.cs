@@ -242,6 +242,7 @@ namespace Football_Processor
                     PrintMessage(1);
                     PrintMessage(11);
                     teamsHandler.PrintSimpleStandings(id);
+
                     break;
                 case 3:
                     Console.WriteLine("Expanded standings");
