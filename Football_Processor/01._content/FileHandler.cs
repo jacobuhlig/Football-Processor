@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Football_Processor
 {
@@ -197,17 +198,41 @@ namespace Football_Processor
             }
         }
 
-        /* public void WriteResults()
+        // "Pos  Team          M W D L GF GA GD P Streak"
+
+
+        public void WriteResults()
         {
             try
             {
-                string[] files = Directory.GetFiles("02._csv\\rounds");
+                string[] files = Directory.GetFiles("02._csv\\01._rounds\\");
                 int numberOfFiles = files.Length + 1;
+                int idx = 1;
+                UI_Elements ui = new UI_Elements();
 
-                Console.WriteLine(numberOfFiles);
-                _writer = new StreamWriter($"02._csv\\03._results.txt");
+                Debug.WriteLine(numberOfFiles);
+                //_writer = new StreamWriter($"02._csv\\03._results.txt");
+                using (StreamWriter writer = new StreamWriter($"02._csv\\03._results.txt"))
+                {
+                    foreach (string file in files)
+                    {
+                        List<Match> resultMatches = FindMatches(idx);
+                        CalcResults(resultMatches);
+                        if (idx == 1) { break; }
+                        else
+                        {
+                            if (idx <= 22)
+                            {
+                                ui.GetDivider(TextDividerType.Wavy, $"Round: {idx}");
+                            }
 
-                _writer.WriteLine($"{round.homeTeam},{round.awayTeam},{round.score}");
+
+                        }
+                    }
+                }
+
+
+                //_writer.WriteLine($"{round.homeTeam},{round.awayTeam},{round.score}");
             }
             catch (Exception e)
             {
@@ -217,6 +242,97 @@ namespace Football_Processor
             {
                 _writer.Close();
             }
-        } */
+        }
+
+        private void CalcResults(List<Match> matches)
+        {
+            foreach (Match match in matches)
+            {
+                Team hTeam = DetermineTeam(match.hTeam);
+                Team aTeam = DetermineTeam(match.aTeam);
+
+                hTeam.gamesPlayed += 1;
+                hTeam.goalsFor += match.hGoals;
+                hTeam.goalsAgainst += match.aGoals;
+                hTeam.goalDifference = hTeam.goalsFor - hTeam.goalsAgainst;
+                aTeam.gamesPlayed += 1;
+                aTeam.goalsFor += match.aGoals;
+                aTeam.goalsAgainst += match.hGoals;
+                aTeam.goalDifference = aTeam.goalsFor - aTeam.goalsAgainst;
+
+                //Draw
+                if (match.hGoals == match.aGoals)
+                {
+                    hTeam.nogDrawn++;
+                    hTeam.pointsAchieved++;
+                    hTeam.SetStreak("D");
+
+                    aTeam.nogDrawn++;
+                    aTeam.pointsAchieved++;
+                    aTeam.SetStreak("D");
+                }
+                //Home team loses
+                else if (match.hGoals < match.aGoals)
+                {
+                    hTeam.nogLost++;
+                    hTeam.SetStreak("L");
+                    aTeam.nogWon++;
+                    aTeam.pointsAchieved += 3;
+                    aTeam.SetStreak("W");
+                }
+                //Home team wins
+                else
+                {
+                    hTeam.nogWon++;
+                    hTeam.pointsAchieved += 3;
+                    hTeam.SetStreak("W");
+                    aTeam.nogLost++;
+                    aTeam.SetStreak("L");
+                }
+
+            }
+        }
+
+        private List<Match> FindMatches(int round)
+        {
+            List<Team> calcedTeams = new List<Team>();
+            List<Match> matches = new List<Match>();
+
+            try
+            {
+                StreamReader rdr = new StreamReader($"02._csv\\01._rounds\\round-{round}.csv");
+                string firstLine = rdr.ReadLine();
+                while (!rdr.EndOfStream)
+                {
+                    string line = rdr.ReadLine();
+                    string[] lines = line.Split(',');
+                    Match match = new Match(lines[0], lines[1], Int32.Parse(lines[2]), Int32.Parse(lines[3]));
+                    matches.Add(match);
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return matches;
+        }
+
+        private Team DetermineTeam(string abbreviation)
+        {
+            Team team = new Team(null, null, null, null);
+
+            foreach (Team item in teams)
+            {
+                if (item.abbreviation == abbreviation)
+                    return item;
+
+            }
+
+            return team;
+        }
+
     }
 }

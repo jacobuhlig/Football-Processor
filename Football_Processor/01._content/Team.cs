@@ -19,7 +19,7 @@ namespace Football_Processor
         public int goalsAgainst { get; set; }
         public int goalDifference { get; set; }
         public int pointsAchieved { get; set; }
-        public int winningStreak { get; set; }
+        public string winningStreak { get; set; }
 
         public Team(string abbreviation, string clubname, string ranking)
         {
@@ -36,5 +36,35 @@ namespace Football_Processor
             this.ranking = ranking;
             this.league = league;
         }
+
+        public void SetStreak(string matchResult = "")
+        {
+            if (matchResult.Length != 1) { return; }
+
+            if (this.winningStreak.Length >= 4)
+            {
+                this.winningStreak = winningStreak.Substring(1);
+                this.winningStreak += matchResult;
+            }
+            else
+            {
+                this.winningStreak += matchResult;
+            }
+            this.winningStreak = winningStreak;
+        }
+
+
+        // "Pos  Team          M W D L GF GA GD P Streak"
+
+        public override string ToString()
+        {
+            string formattedString = $"{}";
+
+
+
+            return base.ToString();
+        }
+
+
     }
 }

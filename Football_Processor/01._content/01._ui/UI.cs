@@ -39,7 +39,7 @@ namespace Football_Processor
             introduced = false;
 
             roundManager.InitRounds(teamsHandler.getTeamAbbreviations());
-            teamsHandler.WriteResults(leaguesHandler.leagues);
+            //teamsHandler.WriteResults(leaguesHandler.leagues);
 
             while (isRunning)
             {
