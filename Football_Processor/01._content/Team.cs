@@ -59,25 +59,18 @@ namespace Football_Processor
 
         // "Pos  Team          M W D L GF GA GD P Streak"
 
+
         public override string ToString()
         {
 
-            string unformattedString =
+
+            string formattedString =
                 $"{this.clubname} ({this.abbreviation}) {this.gamesPlayed} "
                 + $"{this.nogWon} {this.nogDrawn} {this.nogLost} {this.goalsFor} {this.goalsAgainst} "
                 + $"{this.goalDifference} {this.pointsAchieved} {this.winningStreak}";
 
-            string toReturn = unformattedString.ToString();
-            int length = toReturn.Length;
-            Console.WriteLine(length);
 
-            string formattedString =
-                $"{this.clubname} ({this.abbreviation}) {} {this.gamesPlayed} "
-                + $"{this.nogWon} {this.nogDrawn} {this.nogLost} {this.goalsFor} {this.goalsAgainst} "
-                + $"{this.goalDifference} {this.pointsAchieved} {this.winningStreak}";
-
-
-            return toReturn;
+            return formattedString;
         }
     }
 }
