@@ -20,7 +20,7 @@ namespace Football_Processor
         public int goalsAgainst { get; set; }
         public int goalDifference { get; set; }
         public int pointsAchieved { get; set; }
-        public string winningStreak { get; set; }
+        public string winningStreak { get; set; } = "";
 
         public Team(string abbreviation, string clubname, string ranking)
         {
@@ -61,12 +61,23 @@ namespace Football_Processor
 
         public override string ToString()
         {
-            string formattedString =
-                $"{this.clubname} ({this.abbreviation})                   {this.gamesPlayed} "
+
+            string unformattedString =
+                $"{this.clubname} ({this.abbreviation}) {this.gamesPlayed} "
                 + $"{this.nogWon} {this.nogDrawn} {this.nogLost} {this.goalsFor} {this.goalsAgainst} "
                 + $"{this.goalDifference} {this.pointsAchieved} {this.winningStreak}";
 
-            return formattedString.ToString();
+            string toReturn = unformattedString.ToString();
+            int length = toReturn.Length;
+            Console.WriteLine(length);
+
+            string formattedString =
+                $"{this.clubname} ({this.abbreviation}) {} {this.gamesPlayed} "
+                + $"{this.nogWon} {this.nogDrawn} {this.nogLost} {this.goalsFor} {this.goalsAgainst} "
+                + $"{this.goalDifference} {this.pointsAchieved} {this.winningStreak}";
+
+
+            return toReturn;
         }
     }
 }

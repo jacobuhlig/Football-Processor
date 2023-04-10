@@ -241,7 +241,7 @@ namespace Football_Processor
                 int numberOfFiles = files.Length + 1;
                 int idx = 1;
                 UI_Elements ui = new UI_Elements();
-                Console.WriteLine("IN WRITERESULTS()");
+
 
                 //Debug.WriteLine(numberOfFiles);
                 //_writer = new StreamWriter($"02._csv\\03._results.txt");
@@ -252,20 +252,21 @@ namespace Football_Processor
                     List<Match> resultMatches = FindMatches(idx);
                     CalcResults(resultMatches);
                     SortTeams();
-                    if (idx == 1) { break; }
-                    else
+                    //if (idx == 1) { continue; }
+                    //else
+                    //{
+                    if (idx <= 22)
                     {
-                        if (idx <= 22)
+                        Console.WriteLine("\n");
+                        ui.GetDivider(TextDividerType.Wavy, $"Round: {idx}");
+                        foreach (Team team in teams)
                         {
-                            ui.GetDivider(TextDividerType.Wavy, $"Round: {idx}");
-                            foreach (Team team in teams)
-                            {
-                                Console.WriteLine(team);
-                            }
+                            Console.WriteLine(team);
                         }
-
-
                     }
+
+
+                    //}
                     idx++;
                 }
                 //}
@@ -285,14 +286,14 @@ namespace Football_Processor
 
         private void SortTeams()
         {
-            Console.WriteLine("before sorting: " + teams[1]);
+
             teams = teams.OrderByDescending(t => t.pointsAchieved)
             .ThenByDescending(t => t.goalDifference)
             .ThenByDescending(t => t.goalsFor)
             .ThenBy(t => t.abbreviation)
             .ToList();
 
-            Console.WriteLine("after sorting: " + teams[1]);
+
         }
 
         private void CalcResults(List<Match> matches)
@@ -300,7 +301,7 @@ namespace Football_Processor
 
             foreach (Match match in matches)
             {
-                Console.WriteLine("In CalcResults(): " + match.hTeam + " vs " + match.aTeam);
+
                 Team hTeam = DetermineTeam(match.hTeam);
                 Team aTeam = DetermineTeam(match.aTeam);
 
@@ -313,12 +314,12 @@ namespace Football_Processor
                 aTeam.goalsAgainst += match.hGoals;
                 aTeam.goalDifference = aTeam.goalsFor - aTeam.goalsAgainst;
 
-                Console.WriteLine("Inb4 ifstatement");
+
 
                 //Draw
                 if (match.hGoals == match.aGoals)
                 {
-                    Console.WriteLine("In if");
+
                     hTeam.nogDrawn++;
                     hTeam.pointsAchieved++;
                     hTeam.SetStreak("D");
@@ -330,7 +331,7 @@ namespace Football_Processor
                 //Home team loses
                 else if (match.hGoals < match.aGoals)
                 {
-                    Console.WriteLine("In elseif");
+
                     hTeam.nogLost++;
                     hTeam.SetStreak("L");
                     aTeam.nogWon++;
@@ -340,7 +341,7 @@ namespace Football_Processor
                 //Home team wins
                 else
                 {
-                    Console.WriteLine("else");
+
                     hTeam.nogWon++;
                     hTeam.pointsAchieved += 3;
                     hTeam.SetStreak("W");
@@ -355,7 +356,7 @@ namespace Football_Processor
         {
             List<Team> calcedTeams = new List<Team>();
             List<Match> matches = new List<Match>();
-            Console.WriteLine("In FindMatches()");
+
 
             try
             {
