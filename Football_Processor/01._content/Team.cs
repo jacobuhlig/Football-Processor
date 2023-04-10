@@ -6,6 +6,7 @@ namespace Football_Processor
         public string clubname { get; set; }
         public string ranking { get; set; }
         public League league { get; set; }
+        public int position { get; set; }
 
         // Special attribute (not in constructor)
         // nog = number of games
