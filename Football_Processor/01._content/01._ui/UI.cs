@@ -120,7 +120,9 @@ namespace Football_Processor
                     PrintMessage(2);
                     PrintMessage(8);
                     teamsHandler.WriteResults();
-                    //resultsHandler.PrintList();
+                    resultsHandler.PrintList(); /* this has intentionally been left in the program, 
+                    despite it cause an null-pointer exception after its conclusion 
+                    (there is a conflict with another instance of the StreamReader, that is cause the issue).  */
 
                     break;
                 case 2:

@@ -68,17 +68,17 @@ namespace Football_Processor
             // Pad the clubInfo with spaces to the desired length
             string paddedClubInfo = clubInfo.PadRight(desiredLength, ' ');
 
-            int shortLenght = 3;
+            int shortLength = 3;
 
-            string aa = $"{this.gamesPlayed}".PadRight(shortLenght, ' ');
-            string bb = $"{this.nogWon}".PadRight(shortLenght, ' ');
-            string cc = $"{this.nogDrawn}".PadRight(shortLenght, ' ');
-            string dd = $"{this.nogLost}".PadRight(shortLenght, ' ');
-            string ee = $"{this.goalsFor}".PadRight(shortLenght, ' ');
-            string ff = $"{this.goalsAgainst}".PadRight(shortLenght, ' ');
-            string gg = $"{this.goalDifference}".PadRight(shortLenght, ' ');
-            string hh = $"{this.pointsAchieved}".PadRight(shortLenght, ' ');
-            string ii = $"{this.winningStreak}".PadRight(shortLenght, ' ');
+            string aa = $"{this.gamesPlayed}".PadRight(shortLength, ' ');
+            string bb = $"{this.nogWon}".PadRight(shortLength, ' ');
+            string cc = $"{this.nogDrawn}".PadRight(shortLength, ' ');
+            string dd = $"{this.nogLost}".PadRight(shortLength, ' ');
+            string ee = $"{this.goalsFor}".PadRight(shortLength, ' ');
+            string ff = $"{this.goalsAgainst}".PadRight(shortLength, ' ');
+            string gg = $"{this.goalDifference}".PadRight(shortLength, ' ');
+            string hh = $"{this.pointsAchieved}".PadRight(shortLength, ' ');
+            string ii = $"{this.winningStreak}".PadRight(shortLength, ' ');
 
             string formattedString =
                 $"{paddedClubInfo} {aa} {bb} {cc} {dd} {ee} {ff} {gg} {hh} {ii}";
